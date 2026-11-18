@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAMOSTECH58 - Panel VPN</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',Arial}
+body{background:#000;color:#fff;overflow-x:hidden}
+a{text-decoration:none}
+.top{background:#000;border-bottom:1px solid #1e3a8a;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.logo{font-weight:900;font-size:19px} .logo span{color:#2563eb}
+.badge{background:#2563eb;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.hero{padding:22px 16px;background:radial-gradient(600px 200px at 50% 0%,#1d4ed8 0%,#000 70%);text-align:center}
+.hero h1{font-size:32px;line-height:1.1} .hero h1 b{color:#3b82f6}
+.hero p{opacity:.7;font-size:13px;margin:10px 0 16px}
+.stats{display:flex;gap:10px;justify-content:center}
+.stat{background:#0a0a0a;border:1px solid #1e40af;border-radius:14px;padding:10px;flex:1}
+.stat b{font-size:18px;color:#60a5fa} .stat span{font-size:11px;opacity:.7}
+.wrap{padding:16px}
+.card{background:#0b0f1a;border:1px solid #1e3a8a;border-radius:18px;padding:16px;margin-bottom:14px}
+.card h3{font-size:16px;margin-bottom:6px} .card p{font-size:13px;opacity:.75;line-height:1.5}
+input,select{width:100%;background:#000;border:1px solid #1e40af;color:#fff;padding:13px;border-radius:12px;margin:7px 0;outline:none}
+input:focus{border-color:#3b82f6}
+.btn{background:#2563eb;color:#fff;border:none;padding:14px;border-radius:12px;width:100%;font-weight:800;cursor:pointer;font-size:15px}
+.btn:hover{background:#1d4ed8} .btn-green{background:#16a34a} .btn-outline{background:transparent;border:1px solid #2563eb}
+.tabs{display:flex;gap:8px;margin:0 16px 14px;overflow:auto}
+.tab{white-space:nowrap;background:#0b0f1a;border:1px solid #1e3a8a;padding:9px 14px;border-radius:20px;font-size:13px;cursor:pointer}
+.tab.active{background:#2563eb;border-color:#2563eb}
+.offer{display:flex;justify-content:space-between;align-items:center;background:#000;border:1px solid #1e40af;border-radius:14px;padding:13px;margin-top:10px}
+.offer b{font-size:15px} .offer small{display:block;opacity:.6;font-size:12px} .price{color:#60a5fa;font-weight:900;font-size:17px;text-align:right}
+.small-btn{background:#2563eb;color:#fff;border:none;padding:8px 14px;border-radius:9px;font-weight:700;cursor:pointer;margin-top:5px}
+.hidden{display:none}
+.flex{display:flex;gap:10px}
+.flex>*{flex:1}
+.list-item{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #111;font-size:13px}
+.success{background:#052e16;border:1px solid #16a34a;padding:12px;border-radius:12px;font-size:13px;margin-top:10px}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kpi div{background:#000;border:1px solid #1e40af;border-radius:14px;padding:13px;text-align:center}
+.kpi b{font-size:20px;color:#60a5fa;display:block}
+.vpn-box{text-align:center;padding:10px}
+.circle{width:120px;height:120px;border:4px solid #1e40af;border-radius:50%;margin:12px auto;display:flex;align-items:center;justify-content:center;font-size:32px}
+.circle.on{border-color:#22c55e;box-shadow:0 0 30px #22c55e55}
+.toast{position:fixed;bottom:20px;left:16px;right:16px;background:#2563eb;padding:14px;border-radius:12px;text-align:center;font-weight:700;z-index:99;display:none}
+.footer{text-align:center;opacity:.5;font-size:11px;padding:20px}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="logo">RAMOS<span>TECH58</span> 🛡️</div><div class="badge" id="userBadge">INVITÉ</div></div>
+
+<!-- CONNEXION -->
+<div id="authPage">
+<div class="hero"><h1>VPN <b>ULTRA RAPIDE</b><br>RAMOSTECH58</h1><p>Streaming • Gaming • TikTok • WhatsApp • 100% Anonyme</p>
+<div class="stats"><div class="stat"><b>10k+</b><br><span>Utilisateurs</span></div><div class="stat"><b>4.9⭐</b><br><span>Note</span></div><div class="stat"><b>99%</b><br><span>Uptime</span></div></div></div>
+<div class="wrap">
+<div class="tabs"><div class="tab active" onclick="showTab('login',this)">Connexion</div><div class="tab" onclick="showTab('register',this)">Créer compte</div></div>
+<div class="card" id="loginBox"><h3>🔐 Connexion</h3><input id="loginPhone" placeholder="Numéro / Email Ex: 690000000"><input id="loginPass" type="password" placeholder="Mot de passe"><button class="btn" onclick="login()">SE CONNECTER →</button><p style="text-align:center;margin-top:10px">Compte test : <b>demo / 1234</b></p></div>
+<div class="card hidden" id="registerBox"><h3>✨ Créer un compte gratuit</h3><input id="regName" placeholder="Nom complet"><input id="regPhone" placeholder="WhatsApp / Numéro"><input id="regPass" type="password" placeholder="Mot de passe"><button class="btn btn-green" onclick="register()">CRÉER MON COMPTE</button></div>
+<div class="card"><h3>🎁 Offres Populaires</h3>
+<div class="offer"><div><b>1 Jour - Découverte</b><small>Illimité • Haute vitesse</small></div><div class="price">500 F</div></div>
+<div class="offer"><div><b>7 Jours</b><small>Le plus acheté 🔥</small></div><div class="price">2.000 F</div></div>
+<div class="offer"><div><b>30 Jours - VIP</b><small>Serveurs VIP + Support 24h</small></div><div class="price">5.000 F</div></div>
+<button class="btn" style="margin-top:12px" onclick="toast('Crée un compte pour acheter')">ACHETER MAINTENANT</button></div>
+<div class="card"><h3>📲 Télécharger l'App</h3><p>Android APK - v2.5 - 18MB - Sans Pub</p><div class="flex" style="margin-top:10px"><button class="btn" onclick="toast('Lien APK bientôt - Contacte WhatsApp')">⬇ APK ANDROID</button><button class="btn btn-outline" onclick="openWA()">💬 WhatsApp</button></div></div>
+</div></div>
+
+<!-- DASHBOARD -->
+<div id="dashPage" class="hidden">
+<div class="hero"><h1>Salut, <b id="helloName">Ramos</b> 👋</h1><p>Ton abonnement : <b id="planText" style="color:#60a5fa">Aucun - Achète un forfait</b></p></div>
+<div class="wrap">
+<div class="tabs"><div class="tab active" onclick="dashTab('home',this)">🏠 Accueil</div><div class="tab" onclick="dashTab('buy',this)">🛒 Acheter</div><div class="tab" onclick="dashTab('vpn',this)">🛡️ VPN</div><div class="tab" onclick="dashTab('history',this)">📜 Historique</div><div class="tab" onclick="dashTab('parrain',this)">🎁 Parrainage</div></div>
+
+<div id="d-home">
+<div class="kpi"><div><b id="solde">0 F</b><span>Solde</span></div><div><b id="jours">0 Jours</b><span>Restants</span></div></div>
+<div class="card"><h3>⚡ Actions rapides</h3><div class="flex"><button class="btn" onclick="dashTab('buy',null)">Acheter</button><button class="btn btn-green" onclick="dashTab('vpn',null)">Connecter VPN</button></div><button class="btn btn-outline" style="margin-top:10px" onclick="recharge()">💰 Recharger mon solde</button></div>
+<div class="card"><h3>📊 Mes Serveurs</h3><div class="list-item"><span>🇨🇲 Cameroun - Douala</span><b style="color:#22c55e">● 12ms</b></div><div class="list-item"><span>🇫🇷 France - Paris</span><b style="color:#22c55e">● 45ms</b></div><div class="list-item"><span>🇺🇸 USA - New York</span><b style="color:#facc15">● 98ms</b></div><div class="list-item"><span>🇳🇬 Nigeria - Lagos</span><b style="color:#22c55e">● 28ms</b></div></div>
+<div class="card"><h3>💬 Support 24/7</h3><p>Problème ? Notre équipe répond en moins de 5 min.</p><button class="btn" style="margin-top:10px" onclick="openWA()">Contacter sur WhatsApp</button></div>
+</div>
+
+<div id="d-buy" class="hidden">
+<div class="card"><h3>🛒 Choisir un forfait</h3>
+<div class="offer"><div><b>1 Jour</b><small>Test rapide</small></div><div><div class="price">500 F</div><button class="small-btn" onclick="buy('1 Jour',500)">Acheter</button></div></div>
+<div class="offer"><div><b>7 Jours</b><small>POPULAIRE</small></div><div><div class="price">2.000 F</div><button class="small-btn" onclick="buy('7 Jours',2000)">Acheter</button></div></div>
+<div class="offer"><div><b>30 Jours VIP</b><small>Meilleur prix</small></div><div><div class="price">5.000 F</div><button class="small-btn" onclick="buy('30 Jours VIP',5000)">Acheter</button></div></div>
+<div class="offer"><div><b>90 Jours PRO</b><small>Pour les pros</small></div><div><div class="price">12.000 F</div><button class="small-btn" onclick="buy('90 Jours PRO',12000)">Acheter</button></div></div>
+</div>
+<div class="card"><h3>💳 Paiement</h3><select id="payMethod"><option>MTN MoMo</option><option>Orange Money</option><option>Wave</option></select><input id="payNum" placeholder="Numéro de paiement Ex: 690000000"><button class="btn btn-green" onclick="pay()">PAYER MAINTENANT</button><div id="payMsg"></div></div>
+</div>
+
+<div id="d-vpn" class="hidden">
+<div class="card vpn-box"><h3>🛡️ RAMOSTECH58 VPN</h3><select id="server"><option>🇨🇲 Cameroun - Douala (Rapide)</option><option>🇫🇷 France - Paris</option><option>🇺🇸 USA - New York</option><option>🇳🇬 Nigeria - Lagos</option></select><div class="circle" id="vpnCircle">⏻</div><p id="vpnStatus">Déconnecté</p><p style="font-size:12px" id="vpnIp">IP: --</p><button class="btn" id="vpnBtn" onclick="toggleVPN()">CONNECTER</button><div class="kpi"><div><b>125 Mbps</b><span>Download</span></div><div><b>58 Mbps</b><span>Upload</span></div></div></div>
+</div>
+
+<div id="d-history" class="hidden"><div class="card"><h3>📜 Historique</h3><div id="historyList"><p>Aucune transaction pour le moment.</p></div><button class="btn btn-outline" onclick="clearHist()">Effacer</button></div></div>
+
+<div id="d-parrain" class="hidden"><div class="card"><h3>🎁 Parrainage - Gagne 500F</h3><p>Partage ton lien, gagne 500F à chaque ami qui achète.</p><input id="refLink" readonly value="https://ramostech58.onrender.com/?ref=RAMOS58"><button class="btn" onclick="copyRef()">📋 COPIER MON LIEN</button><div class="kpi"><div><b id="refCount">0</b><span>Filleuls</span></div><div><b id="refGain">0 F</b><span>Gains</span></div></div></div></div>
+
+<button class="btn btn-outline" onclick="logout()">🚪 Déconnexion</button>
+</div></div>
+
+<div class="footer">© 2026 RAMOSTECH58 - Conçu à Yaoundé 🇨🇲<br>Support: WhatsApp 24/7</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let user=null, selected=null, selectedPrice=0, isOn=false, hist=[];
+function toast(m){let t=document.getElementById('toast');t.innerText=m;t.style.display='block';setTimeout(()=>t.style.display='none',3000)}
+function showTab(id,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('loginBox').classList.toggle('hidden',id!=='login');document.getElementById('registerBox').classList.toggle('hidden',id!=='register')}
+function register(){let n=document.getElementById('regName').value, p=document.getElementById('regPhone').value, pw=document.getElementById('regPass').value; if(!n||!p||!pw) return toast('Remplis tous les champs'); localStorage.setItem('ramos_user',JSON.stringify({name:n,phone:p,pass:pw})); toast('Compte créé ! Connecte-toi'); showTab('login',document.querySelectorAll('.tab')[0]);}
+function login(){let ph=document.getElementById('loginPhone').value, pw=document.getElementById('loginPass').value; let saved=JSON.parse(localStorage.getItem('ramos_user')||'null'); if((ph==='demo'&&pw==='1234')||(saved&&saved.phone===ph&&saved.pass===pw)){ user=saved&&saved.phone===ph?saved:{name:'Ramos Demo',phone:ph}; document.getElementById('helloName').innerText=user.name.split(' ')[0]; document.getElementById('userBadge').innerText=user.name.toUpperCase(); document.getElementById('authPage').classList.add('hidden'); document.getElementById('dashPage').classList.remove('hidden'); toast('Bienvenue '+user.name); window.scrollTo(0,0);} else toast('Numéro ou mot de passe incorrect');}
+function logout(){location.reload()}
+function dashTab(id,el){if(el){document.querySelectorAll('#dashPage .tab').forEach(t=>t.classList.remove('active'));el.classList.add('active')} ['home','buy','vpn','history','parrain'].forEach(k=>document.getElementById('d-'+k).classList.toggle('hidden',k!==id))}
+function buy(name,price){selected=name;selectedPrice=price;dashTab('buy',null);toast(name+' sélectionné - '+price+'F');document.getElementById('payMsg').innerHTML='<div class="success">✅ Tu as choisi <b>'+name+' - '+price+'F</b><br>Mets ton numéro et clique PAYER</div>'}
+function pay(){let num=document.getElementById('payNum').value; let m=document.getElementById('payMethod').value; if(!selected) return toast('Choisis un forfait d’abord'); if(!num) return toast('Mets ton numéro de paiement'); let item=selected+' - '+selectedPrice+'F via '+m; hist.unshift(item); renderHist(); document.getElementById('planText').innerText=selected+' - Actif'; document.getElementById('jours').innerText=selected; document.getElementById('payMsg').innerHTML='<div class="success">🎉 Paiement lancé !<br>Valide sur ton téléphone.<br><b>'+item+'</b><br>Tu recevras ton code par WhatsApp.</div>'; toast('Paiement lancé, valide sur ton téléphone');}
+function renderHist(){let h=document.getElementById('historyList'); if(!hist.length) return; h.innerHTML=hist.map(x=>'<div class="list-item"><span>'+x+'</span><b style="color:#22c55e">Payé</b></div>').join('')}
+function clearHist(){hist=[];document.getElementById('historyList').innerHTML='<p>Aucune transaction.</p>'}
+function recharge(){let m=prompt('Montant à recharger (FC
